@@ -25,7 +25,7 @@ function showSection(sectionId) {
         const offset = 120; // Height of fixed HUD
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const targetPosition = rect.top + scrollTop - offset;
-        
+
         window.scrollTo({
             top: targetPosition,
             behavior: 'smooth'
@@ -57,7 +57,7 @@ function showScene(group, sectionId, options = {}) {
     } else if (group === 'bloque5') {
         document.querySelectorAll('[id^="bloque5-"]').forEach(s => s.style.display = 'none');
     }
-    
+
     // Show the target section
     showSection(sectionId);
 }
@@ -128,7 +128,7 @@ const teacherNotes = {
 window.addEventListener('DOMContentLoaded', () => {
     // Hide all sections initially
     hideAllSections();
-    
+
     // Hide loading screen with fade-in
     setTimeout(() => {
         document.getElementById('loading').classList.add('loading-hidden');
@@ -143,7 +143,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
         // Prevent shortcuts if typing in an input
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-        
+
         // Choice shortcuts
         if (e.key === '1') {
             const btn = document.querySelector('.choices button:nth-child(1):not(:disabled)');
@@ -152,7 +152,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const btn = document.querySelector('.choices button:nth-child(2):not(:disabled)');
             if (btn && !isPaused) btn.click();
         }
-        
+
         // Teacher Mode shortcuts
         else if (e.key.toLowerCase() === 't') {
             toggleTeacherMode();
@@ -213,16 +213,16 @@ function startIntroMission() {
     const container = document.getElementById('rpg-dialog-container');
     if (!container) return;
     container.innerHTML = '';
-    
+
     // CMO dialog
     const cmoDialog = showRPGDialog('cmo', 'Necesito lanzar una campaña y ver resultados en tiempo real. ¿Cuánto tardas?');
     container.appendChild(cmoDialog);
-    
+
     setTimeout(() => {
         // Analytics dialog
         const analyticsDialog = showRPGDialog('analytics', 'Yo te puedo dar reports... pero tardas semanas en implementar con desarrollo.');
         container.appendChild(analyticsDialog);
-        
+
         setTimeout(() => {
             console.log('⏱️ Second setTimeout executed');
             // Your turn with choices
@@ -234,7 +234,7 @@ function startIntroMission() {
             container.appendChild(yourDialog);
         }, 2000);
     }, 2000);
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -257,17 +257,17 @@ function showIntroQuiz() {
 
 function startTowerBuilderGame() {
     showScene('introSections', 'intro-tower-game');
-    
+
     // Initialize the drag-drop game
     setTimeout(() => {
         initTowerBuilderGame('tower-game-container');
     }, 100);
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // Called when tower game is completed
-window.onTowerComplete = function() {
+window.onTowerComplete = function () {
     setTimeout(() => {
         showScene('introSections', 'intro-theory-3');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -281,7 +281,7 @@ function startFirstEventMission() {
 
 function completeFirstEvent() {
     unlockAchievement('first_event');
-    
+
     setTimeout(() => {
         showScene('introSections', 'intro-theory-expandible-2');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -300,18 +300,18 @@ function completeIntro() {
         'intro-tower-game', 'intro-theory-3', 'intro-mission-2', 'intro-theory-4',
         'intro-quiz-game', 'intro-final'
     ];
-    
+
     introScenes.forEach(id => {
         const scene = document.getElementById(id);
         if (scene) scene.style.display = 'none';
     });
-    
+
     // Also hide old intro scenes if they exist
     for (let i = 1; i <= 14; i++) {
         const scene = document.getElementById(`intro-scene-${i}`);
         if (scene) scene.style.display = 'none';
     }
-    
+
     document.getElementById('chapter-1').style.display = 'block';
     currentChapter = 1;
     initChaosCanvas();
@@ -321,7 +321,7 @@ function completeIntro() {
 // Make a choice
 function makeChoice(chapter, choice) {
     choices[chapter] = choice;
-    
+
     // Disable all choice buttons for this chapter and mark selected
     const chapterEl = document.getElementById(`chapter-${chapter}`);
     const buttons = chapterEl.querySelectorAll('.choice-btn');
@@ -332,17 +332,17 @@ function makeChoice(chapter, choice) {
             btn.classList.add('selected');
         }
     });
-    
+
     // Show outcome
     const outcomeEl = document.getElementById(`outcome-${chapter}-${choice}`);
     if (outcomeEl) {
         outcomeEl.style.display = 'block';
-        
+
         // Scroll to outcome
         setTimeout(() => {
             outcomeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 100);
-        
+
         // Show conclusion after a delay
         setTimeout(() => {
             const conclusionEl = document.getElementById(`conclusion-${chapter}`);
@@ -354,7 +354,7 @@ function makeChoice(chapter, choice) {
             }
         }, 1500);
     }
-    
+
     // Update canvas animation based on choice
     if (chapter === 1) {
         updateChaosCanvas(choice);
@@ -364,13 +364,13 @@ function makeChoice(chapter, choice) {
 // Navigate to next chapter
 function nextChapter(chapter) {
     currentChapter = chapter;
-    
+
     // Hide current chapter
     const prevChapter = document.getElementById(`chapter-${chapter - 1}`);
     if (prevChapter) {
         prevChapter.style.display = 'none';
     }
-    
+
     // Show next chapter
     const nextChapterEl = document.getElementById(`chapter-${chapter}`);
     if (nextChapterEl) {
@@ -387,17 +387,17 @@ function nextChapter(chapter) {
 function restart() {
     currentChapter = 1;
     Object.keys(choices).forEach(key => delete choices[key]);
-    
+
     // Hide everything
     document.querySelectorAll('.chapter').forEach(ch => ch.style.display = 'none');
     document.getElementById('main-story').style.display = 'none';
-    
+
     // Reset chapter 1
     const chapter1 = document.getElementById('chapter-1');
     chapter1.querySelectorAll('.choice-btn').forEach(btn => btn.disabled = false);
     chapter1.querySelectorAll('.outcome').forEach(out => out.style.display = 'none');
     chapter1.querySelector('.conclusion').style.display = 'none';
-    
+
     // Show title screen
     document.getElementById('title-screen').classList.add('active');
     window.scrollTo({ top: 0 });
@@ -411,7 +411,7 @@ function toggleTeacherMode() {
     const bar = document.getElementById('teacher-bar');
     const floatingBtn = document.getElementById('teacher-mode-toggle');
     const devTools = document.getElementById('dev-tools');
-    
+
     if (teacherMode) {
         bar.style.display = 'flex';
         floatingBtn.style.display = 'none';
@@ -430,7 +430,7 @@ function toggleTeacherMode() {
 function togglePause() {
     isPaused = !isPaused;
     document.body.classList.toggle('paused', isPaused);
-    
+
     const btn = document.getElementById('pause-btn');
     if (isPaused) {
         btn.innerHTML = '▶ Reanudar';
@@ -457,7 +457,7 @@ function toggleDevTools() {
         console.log('Dev Tools solo disponibles en Modo Profesor (presiona T)');
         return;
     }
-    
+
     const devTools = document.getElementById('dev-tools');
     if (devTools.style.display === 'none' || !devTools.style.display) {
         devTools.style.display = 'block';
@@ -469,31 +469,31 @@ function toggleDevTools() {
 function jumpToSection(sectionId) {
     // Hide all sections
     hideAllSections();
-    
+
     // Show game HUD if not visible
     const hud = document.getElementById('game-hud');
     if (hud && hud.style.display === 'none') {
         hud.style.display = 'flex';
     }
-    
+
     // Hide title screen
     const titleScreen = document.getElementById('title-screen');
     if (titleScreen) {
         titleScreen.classList.remove('active');
     }
-    
+
     // Show main story
     const mainStory = document.getElementById('main-story');
     if (mainStory) {
         mainStory.style.display = 'block';
     }
-    
+
     // Show the requested section
     const section = document.getElementById(sectionId);
     if (section) {
         section.style.display = 'block';
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        
+
         // Initialize mini-games if needed
         if (sectionId === 'intro-tower-game') {
             initTowerBuilderGame('intro-tower-game');
@@ -502,7 +502,7 @@ function jumpToSection(sectionId) {
         } else if (sectionId === 'intro-secretos') {
             initSecretosSection();
         } else if (sectionId === 'bloque2-checklist') {
-            initChecklistSection();
+            initChecklistGame();
         } else if (sectionId.startsWith('bloque2-game-')) {
             const gameNum = sectionId.split('-')[2];
             const initFunc = window[`initBloque2Game${gameNum}`];
@@ -516,7 +516,7 @@ function jumpToSection(sectionId) {
         } else if (sectionId === 'bloque3-boss-fight') {
             initBloque3BossFight();
         }
-        
+
         // Initialize canvas if needed
         if (sectionId === 'intro-welcome') {
             initIntroCanvas();
@@ -525,7 +525,7 @@ function jumpToSection(sectionId) {
         } else if (sectionId === 'bloque3-welcome') {
             initBloque3Canvas();
         }
-        
+
         console.log(`🔧 Dev Tools: Jumped to ${sectionId}`);
     } else {
         console.error(`Section ${sectionId} not found`);
@@ -549,10 +549,10 @@ function jumpToChapter(chapter) {
         restart();
         return;
     }
-    
+
     // Hide all chapters
     document.querySelectorAll('.chapter').forEach(ch => ch.style.display = 'none');
-    
+
     // Show selected chapter
     const targetChapter = document.getElementById(`chapter-${chapter}`);
     if (targetChapter) {
@@ -561,7 +561,7 @@ function jumpToChapter(chapter) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         updateProgress();
         updateNavActiveItem();
-        
+
         // Close nav on mobile
         if (window.innerWidth <= 768) {
             toggleNav();
@@ -580,7 +580,7 @@ function updateNavActiveItem() {
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
     });
-    
+
     const currentItem = document.querySelector(`.nav-item[onclick="jumpToChapter(${currentChapter})"]`);
     if (currentItem) {
         currentItem.classList.add('active');
@@ -590,7 +590,7 @@ function updateNavActiveItem() {
 function showTeacherNotes(chapter, choice) {
     const notesPanel = document.getElementById('teacher-notes');
     const notesContent = document.getElementById('teacher-notes-content');
-    
+
     if (teacherNotes[chapter] && teacherNotes[chapter][choice]) {
         const notes = teacherNotes[chapter][choice];
         notesContent.innerHTML = '<ul>' + notes.map(note => `<li>${note}</li>`).join('') + '</ul>';
@@ -604,9 +604,9 @@ function hideTeacherNotes() {
 
 // Update makeChoice to show teacher notes
 const originalMakeChoice = makeChoice;
-makeChoice = function(chapter, choice) {
+makeChoice = function (chapter, choice) {
     originalMakeChoice(chapter, choice);
-    
+
     // Show teacher notes if in teacher mode
     if (teacherMode) {
         setTimeout(() => {
@@ -626,15 +626,15 @@ function showTheoryModal(section, event) {
         event.stopPropagation();
         event.stopImmediatePropagation();
     }
-    
+
     currentTheorySection = section || 'intro';
     currentTheorySlide = 0;
-    
+
     const modal = document.getElementById('theory-modal');
     modal.style.display = 'flex';
-    
+
     renderTheorySlide();
-    
+
     // Prevent any scroll
     return false;
 }
@@ -664,13 +664,13 @@ function nextTheorySlide() {
 function renderTheorySlide() {
     const section = theoryContent[currentTheorySection];
     if (!section || !section.slides) return;
-    
+
     const slides = section.slides;
     const slide = slides[currentTheorySlide];
-    
+
     const content = document.getElementById('theory-content');
     const progress = document.getElementById('theory-progress');
-    
+
     // Build HTML
     let html = `
         <div class="theory-header">
@@ -681,7 +681,7 @@ function renderTheorySlide() {
             ${slide.content}
         </div>
     `;
-    
+
     content.innerHTML = html;
     progress.textContent = `${currentTheorySlide + 1}/${slides.length}`;
 }
@@ -689,7 +689,7 @@ function renderTheorySlide() {
 function showFinalScreen() {
     // Hide all chapters
     document.querySelectorAll('.chapter').forEach(ch => ch.style.display = 'none');
-    
+
     // Show final screen
     document.getElementById('chapter-final').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -703,10 +703,10 @@ function startBloque2() {
     document.querySelectorAll('.intro-scene-section, .theory-section').forEach(s => {
         s.style.display = 'none';
     });
-    
+
     showScene('bloque2', 'bloque2-welcome');
     showGameHUD();
-    
+
     // Wait for the scene to be visible before initializing canvas and scrolling
     setTimeout(() => {
         initBloque2Canvas();
@@ -761,8 +761,14 @@ function startBloque2Game5() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function startBloque2BossFight() {
+function showSecretTech() {
     hideScene('bloque2', 'bloque2-theory-6');
+    showScene('bloque2', 'bloque2-secret-tech');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function startBloque2BossFight() {
+    hideScene('bloque2', 'bloque2-secret-tech');
     showScene('bloque2', 'bloque2-boss-fight');
     setTimeout(() => initBloque2BossFight('bloque2-boss-fight-container'), 100);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -773,6 +779,13 @@ function completeBloque2() {
     showScene('bloque2', 'bloque2-final');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     addXP(200);
+}
+
+function startBloque2Checklist() {
+    hideScene('bloque2', 'bloque2-secret-tech');
+    showScene('bloque2', 'bloque2-checklist');
+    setTimeout(() => initChecklistGame(), 100);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ========== BLOQUE 3 NAVIGATION ==========
@@ -960,24 +973,24 @@ function continueFromTheoryBlock3() {
 function completeQuizMission() {
     hideGroupScenes('introSections');
     showScene('introSections', 'intro-secretos');
-    
+
     // Init secretos game
     setTimeout(() => {
         initSecretosGame();
     }, 100);
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function skipQuizAndContinue() {
     hideGroupScenes('introSections');
     showScene('introSections', 'intro-secretos');
-    
+
     // Init secretos game
     setTimeout(() => {
         initSecretosGame();
     }, 100);
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -993,24 +1006,24 @@ function initSecretosSection() {
 function startSecretosSection() {
     hideScene('introSections', 'intro-final');
     showScene('introSections', 'intro-secretos');
-    
+
     // Init secretos game
     setTimeout(() => {
         initSecretosGame();
     }, 100);
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function startChecklistSection() {
     hideScene('bloque2', 'bloque2-theory-6');
     showScene('bloque2', 'bloque2-checklist');
-    
+
     // Init checklist game
     setTimeout(() => {
         initChecklistGame();
     }, 100);
-    
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1020,10 +1033,10 @@ function initFundamentosSlides() {
     const slides = theoryContent.afterBloque2Part1.slides;
     const container = document.getElementById('fundamentos-slides');
     let currentSlide = 0;
-    
+
     function renderSlide() {
         const slide = slides[currentSlide];
-        
+
         container.innerHTML = `
             <div class="fundamentos-slide" style="animation: fadeInScale 0.5s ease;">
                 <div style="background: rgba(78, 205, 196, 0.1); padding: 3rem; border-radius: 15px; border: 2px solid var(--primary); margin-bottom: 2rem;">
@@ -1040,35 +1053,35 @@ function initFundamentosSlides() {
                     
                     <div style="display: flex; gap: 1rem;">
                         ${currentSlide > 0 ? '<button class="btn-continue" onclick="prevFundamentosSlide()">← Anterior</button>' : ''}
-                        ${currentSlide < slides.length - 1 
-                            ? '<button class="btn-primary" onclick="nextFundamentosSlide()">Siguiente →</button>'
-                            : '<button class="btn-primary" onclick="completeFundamentos()">Continuar al juego →</button>'}
+                        ${currentSlide < slides.length - 1
+                ? '<button class="btn-primary" onclick="nextFundamentosSlide()">Siguiente →</button>'
+                : '<button class="btn-primary" onclick="completeFundamentos()">Continuar al juego →</button>'}
                     </div>
                 </div>
             </div>
         `;
     }
-    
-    window.nextFundamentosSlide = function() {
+
+    window.nextFundamentosSlide = function () {
         if (currentSlide < slides.length - 1) {
             currentSlide++;
             renderSlide();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
-    
-    window.prevFundamentosSlide = function() {
+
+    window.prevFundamentosSlide = function () {
         if (currentSlide > 0) {
             currentSlide--;
             renderSlide();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
-    
-    window.completeFundamentos = function() {
+
+    window.completeFundamentos = function () {
         continueFromTheoryBlock1();
     };
-    
+
     renderSlide();
 }
 
@@ -1088,7 +1101,7 @@ function continueFromIntroTheory2() {
 
 function continueFromIntroTheory3() {
     showScene('introSections', 'intro-quiz-game');
-    
+
     setTimeout(() => {
         initMarketerQuizGame('marketer-quiz-container');
     }, 100);
@@ -1173,7 +1186,7 @@ function completeBloque6() {
     hideAllSections();
     document.getElementById('bloque6-final').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    
+
     // Unlock final achievement
     if (typeof unlockAchievement === 'function') {
         unlockAchievement('gtm_master');

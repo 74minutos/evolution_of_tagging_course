@@ -8,6 +8,13 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="/css/main.css?v=117">
+    <style>
+      @import "@fontsource/inter/400.css";
+      @import "@fontsource/inter/500.css";
+      @import "@fontsource/inter/600.css";
+      @import "@fontsource/inter/700.css";
+      @import "../styles/modern-theme.css";
+    </style>
 </head>
 <body>
     <!-- Loading screen -->
@@ -1358,68 +1365,37 @@ Tags fired: [ninguno aún, porque no hay trigger para este evento]</pre>
 <section class="chapter intro-scene-section" id="bloque2-intro-datalayer" style="display: none;">
     <div class="narrative center-content">
         <h2>📦 ¿Qué es el dataLayer?</h2>
-        <span class="intro-pill">Concepto clave · 3 min</span>
+        <span class="intro-pill">Minijuego: La Cocina del Dato</span>
 
         <div class="narrator-box" style="margin-top: 2rem;">
-            <div class="narrator-icon">💡</div>
+            <div class="narrator-icon">🍳</div>
             <div class="narrator-text">
-                <p><strong>Antes de hablar de eventos, necesitas entender dónde "viven" esos eventos.</strong></p>
-                <p>Imagina que tu web es un restaurante. Cada cosa que pasa (cliente entra, pide carta, hace pedido, paga) es información valiosa. Pero... ¿dónde se apunta todo eso?</p>
+                <p><strong>Bienvenido a la cocina de tu web.</strong></p>
+                <p>GTM es el Chef. Él cocina los Tags.</p>
+                <p>Pero un Chef no puede cocinar si la despensa está vacía.</p>
+                <p><strong>El dataLayer es tu despensa.</strong></p>
             </div>
         </div>
 
-        <div class="intro-grid-3" style="margin-top: var(--space-lg);">
-            <article class="intro-card-motion" style="border-left: 4px solid #f44336;">
-                <h3>❌ Sin sistema</h3>
-                <p>Cada camarero tiene su propia libreta. Nadie sabe cuántos clientes pidieron el especial. El chef no sabe qué preparar.</p>
-                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem;"><strong>= Web sin dataLayer</strong></p>
-            </article>
-            <article class="intro-card-motion" style="border-left: 4px solid #4caf50;">
-                <h3>✅ Con sistema</h3>
-                <p>Hay UN libro central donde TODO se apunta. Cualquiera puede consultarlo. Gerencia sabe exactamente qué pasó.</p>
-                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem;"><strong>= Web con dataLayer</strong></p>
-            </article>
-            <article class="intro-card-motion" style="border-left: 4px solid #2196f3;">
-                <h3>🎯 El dataLayer</h3>
-                <p>Es ese "libro central". Un array de JavaScript donde la web escribe todo lo que pasa para que GTM lo lea.</p>
-                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem;"><strong>= La fuente de verdad</strong></p>
-            </article>
+        <div class="intro-card-motion" style="margin: 2rem 0;">
+            <p><strong>Misión:</strong> El Chef GTM necesita cocinar platos específicos (Tags). Arrastra los ingredientes correctos (Variables) desde el dataLayer a la olla.</p>
         </div>
 
-        <div class="narrator-box analogy" style="margin-top: 2rem;">
-            <div class="narrator-icon">🍕</div>
-            <div class="narrator-text">
-                <h4 style="margin-top: 0;">Analogía: La pizzería</h4>
-                <p><strong>Cliente pide pizza</strong> → Camarero anota en el libro central: "Mesa 5, pizza margarita, sin gluten"</p>
-                <p><strong>Usuario hace clic en "Añadir al carrito"</strong> → La web anota en dataLayer: "evento add_to_cart, producto X, precio 29.99€"</p>
-                <p style="margin-bottom: 0;"><strong>GTM es el chef</strong> que está mirando el libro constantemente. Cuando ve algo que le interesa (un evento), actúa.</p>
-            </div>
+        <div id="pantry-game-container" style="min-height: 400px; padding: 1rem;">
+            <button class="btn-primary" onclick="PANTRY_GAME.init('pantry-game-container')">
+                🥗 Entrar a la Cocina
+            </button>
         </div>
-
-        <div style="background: rgba(33, 150, 243, 0.08); padding: var(--space-lg); border-radius: 10px; margin: 2rem 0; border-left: 4px solid #2196f3;">
-            <h4 style="margin-top: 0; color: #2196f3;">🔧 Técnicamente (muy simple)</h4>
-            <p>El dataLayer es una variable que ya existe en tu web cuando instalas GTM:</p>
-            <pre style="background: #1a1a1a; color: #4fda7f; padding: 1rem; border-radius: 8px; margin-top: 0.5rem; font-family: 'Courier New', monospace;">dataLayer = []   // ← Un array vacío esperando información</pre>
-            <p style="margin-top: 1rem;">Cuando algo pasa, la web "empuja" (push) información a ese array:</p>
-            <pre style="background: #1a1a1a; color: #4fda7f; padding: 1rem; border-radius: 8px; margin-top: 0.5rem; font-family: 'Courier New', monospace;">dataLayer.push(&#123; event: 'algo_pasó' &#125;)   // ← "Oye GTM, pasó algo!"</pre>
-            <p style="margin-bottom: 0; margin-top: 1rem;"><strong>GTM está escuchando</strong>. Cuando ve un evento que le interesa, ejecuta las etiquetas correspondientes.</p>
-        </div>
-
+        
         <div class="narrator-box" style="margin-top: 2rem;">
             <div class="narrator-icon">🎓</div>
             <div class="narrator-text">
-                <h4 style="margin-top: 0;">Lo que necesitas recordar:</h4>
-                <ul style="margin: 0; padding-left: 1.25rem;">
-                    <li><strong>dataLayer</strong> = donde la web escribe lo que pasa</li>
-                    <li><strong>.push()</strong> = "empujar" información al dataLayer</li>
-                    <li><strong>event</strong> = la palabra clave que GTM escucha</li>
-                    <li><strong>GTM</strong> = está mirando el dataLayer todo el tiempo</li>
-                </ul>
+                <p><strong>Lección:</strong> Sin dataLayer, GTM se muere de hambre.</p>
             </div>
         </div>
 
         <button class="btn-continue" onclick="startBloque2Mission1()" style="margin-top: 2rem;">
-            Ahora sí, veamos la anatomía de un evento →
+            Continuar: Anatomía de un evento →
         </button>
     </div>
 </section>
@@ -1951,66 +1927,58 @@ Tags fired: [ninguno aún, porque no hay trigger para este evento]</pre>
 <!-- Parte Teórica 6: Estrategia y naming -->
 <section class="chapter intro-scene-section" id="bloque2-theory-6" style="display: none;">
     <div class="narrative center-content">
-        <h2>📝 Estrategia y naming (profundidad conceptual)</h2>
+        <h2>📜 El Archivo de la Torre (Gobernanza)</h2>
+        <span class="intro-pill">Minijuego: El Archivero</span>
 
-        <div class="narrator-box">
-            <div class="narrator-icon">📖</div>
+        <div class="narrator-box" style="margin-top: 2rem;">
+            <div class="narrator-icon">🧐</div>
             <div class="narrator-text">
-                <h3>La Guía dice:</h3>
-                <p><strong>La potencia de GTM depende de cómo nombramos y organizamos los eventos.</strong></p>
+                <p><strong>Tu torre crece. Tus etiquetas se multiplican.</strong></p>
+                <p>Si no eres ordenado, en 3 meses esto será un caos inmanejable.</p>
+                <p><strong>Tu misión:</strong> Auditar los nombres de las etiquetas entrantes. Solo aceptamos la convención sagrada:</p>
+                <div style="background: #000; color: #0f0; padding: 0.5rem; margin: 0.5rem 0; font-family: monospace;">Proyecto - Herramienta - Acción</div>
             </div>
         </div>
 
-        <div class="gtm-features">
-            <div class="feature">
-                <div class="feature-icon">✅</div>
-                <h4>Consistencia</h4>
-                <p>Menos errores</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">💡</div>
-                <h4>Claridad</h4>
-                <p>Mejor colaboración</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📈</div>
-                <h4>Escalabilidad</h4>
-                <p>Proyectos más robustos</p>
-            </div>
+        <div id="archivist-game-container" style="min-height: 400px; padding: 1rem;">
+            <button class="btn-primary" onclick="ARCHIVIST_GAME.init('archivist-game-container')">
+                👮‍♂️ Empezar Auditoría
+            </button>
         </div>
 
-        <div style="background: rgba(78, 205, 196, 0.1); padding: var(--space-xl); border-radius: 10px; margin: 2rem 0;">
-            <h3>📌 Buenas prácticas:</h3>
-            <div class="benefits-list" style="margin-top: 1rem;">
-                <div class="benefit-item">
-                    <span class="benefit-icon">🔤</span>
-                    <span><strong>snake_case</strong> o <strong>camelCase</strong> consistente</span>
-                </div>
-                <div class="benefit-item">
-                    <span class="benefit-icon">🏷️</span>
-                    <span>Prefijos lógicos (<code>add_to_cart</code>, <code>begin_checkout</code>)</span>
-                </div>
-                <div class="benefit-item">
-                    <span class="benefit-icon">🔄</span>
-                    <span>Eventos comunes entre plataformas</span>
-                </div>
-                <div class="benefit-item">
-                    <span class="benefit-icon">📚</span>
-                    <span>Documentación clara del schema</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="narrator-box analogy">
-            <div class="narrator-icon">📜</div>
+        <div class="narrator-box" style="margin-top: 2rem; border-left: 4px solid #ff9800;">
+            <div class="narrator-icon">⚠️</div>
             <div class="narrator-text">
-                <p><strong>No se trata solo de hablar el idioma de GTM...</strong></p>
-                <p>Sino de hacerlo con gramática impecable.</p>
+                <p><strong>La Regla de Oro:</strong></p>
+                <p>Jamás llames a un tag "Nuevo Tag". Jamás.</p>
+                <p>Usa <code>MiWeb - GA4 - Purchase</code>.</p>
             </div>
         </div>
 
-        <button class="btn-continue" onclick="showIntroChecklist()">
-            ✅ Checklist de implementación (modo sensei) 👻
+        <button class="btn-continue" onclick="showSecretTech()" style="margin-top: 2rem;">
+            Continuar →
+        </button>
+    </div>
+</section>
+
+<!-- Bonus Level: Secret Tech -->
+<section class="chapter intro-scene-section" id="bloque2-secret-tech" style="display: none;">
+    <div class="narrative center-content">
+        <h2>🔓 SECRET TECH DESBLOQUEADO</h2>
+        <span class="intro-pill" style="background: linear-gradient(45deg, #FFD700, #FFA500); color: black;">Nivel Avanzado</span>
+
+        <div class="narrator-box" style="background: linear-gradient(135deg, #222, #444); color: white; border: 2px solid #FFD700;">
+            <div class="narrator-icon">💎</div>
+            <div class="narrator-text">
+                <h3>Has descubierto: User-Provided Data</h3>
+                <p>Las cookies están muriendo. Pero los datos propios (1st party) son eternos.</p>
+                <p>Ahora puedes configurar variables que capturan <strong>Email, Teléfono y Dirección</strong> (hasheados) para enviarlos a Google y Meta.</p>
+                <p><strong>Efecto:</strong> +20% Conversiones atribuidas (Enhanced Conversions).</p>
+            </div>
+        </div>
+        
+        <button class="btn-continue" onclick="startBloque2Checklist()" style="margin-top: 2rem;">
+            ✅ Ir al Checklist (Sensei Mode) →
         </button>
     </div>
 </section>
@@ -4269,7 +4237,9 @@ Usuario → Navegador → [1 Script]
     <script is:inline src="/js/bloque4-minigames.js?v=100"></script>
     <script is:inline src="/js/bloque5-minigames.js?v=1"></script>
     <script is:inline src="/js/canvas.js?v=22"></script>
-    <script is:inline src="/js/main.js?v=2004"></script>
+    <script is:inline src="/js/archivist-game.js"></script>
+    <script is:inline src="/js/pantry-game.js"></script>
+    <script is:inline src="/js/main.js?v=2005"></script>
 </body>
 </html>
 
