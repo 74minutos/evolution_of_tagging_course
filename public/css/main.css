@@ -3475,3 +3475,128 @@ code, pre {
     cursor: pointer;
     flex: 1;
 }
+
+/* ==========================================================================
+   🚀 ZERO NOISE REDESIGN OVERRIDES (SENIOR GAME DESIGNER PATCH)
+   ========================================================================== */
+
+/* 1. RESET & VARIABLES */
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Quicksand:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    --bg-canvas: #FDFBF7;
+    --ink-primary: #2d3436;
+    --stroke-light: rgba(0,0,0,0.08); /* Minimalist border */
+}
+
+body {
+    background: var(--bg-canvas) !important;
+    font-family: 'Quicksand', sans-serif !important;
+    background-image: none !important; /* Kill texture */
+}
+
+body::before, body::after {
+    display: none !important; /* Kill noise layers */
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Kalam', cursive !important;
+    color: var(--ink-primary) !important;
+}
+
+/* 2. KILL THE CARDS (The "No Container" Rule) */
+.kingdom, 
+.mission-box, 
+.intro-scene-section, 
+.narrator-box,
+.theory-section,
+.relic,
+.practice-section, 
+.gtm-definition {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    background-image: none !important;
+}
+
+/* 3. RECONSTRUCT WITH MINIMALISM */
+
+/* Definition Box: Just a left line */
+.gtm-definition {
+    border-left: 4px solid var(--primary) !important;
+    padding-left: 2rem !important;
+    text-align: left !important;
+    border-radius: 0 !important;
+}
+.gtm-definition h3 { margin-top: 0 !important; }
+
+/* Kingdoms (Technically, Commercially...): Clean Columns */
+.kingdoms-grid {
+    gap: 2rem !important;
+}
+
+.kingdom {
+    text-align: center !important;
+    padding: 1rem !important;
+    /* Optional: very subtle dividers instead of cards */
+    border-right: 1px solid var(--stroke-light) !important; 
+}
+.kingdom:last-child { border-right: none !important; }
+
+/* On mobile, stack them with bottom borders */
+@media (max-width: 768px) {
+    .kingdom { 
+        border-right: none !important; 
+        border-bottom: 1px solid var(--stroke-light) !important;
+    }
+}
+
+/* Narrator: Floating text */
+.narrator-box {
+    padding: 0 !important;
+    margin: 3rem 0 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    border-left: none !important;
+}
+.narrator-icon {
+    font-size: 3rem !important;
+    opacity: 0.8;
+    margin-right: 1.5rem !important;
+}
+.narrator-text {
+    font-size: 1.2rem !important;
+    font-family: 'Kalam', cursive !important; /* Handwritten note feel */
+    color: #555 !important;
+}
+
+/* 4. BUTTONS: JUICE OVER DECORATION */
+.btn-primary, .btn-continue {
+    background: transparent !important;
+    border: 3px solid var(--primary) !important;
+    box-shadow: none !important;
+    color: var(--ink-primary) !important;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px !important; /* Sketchy shape */
+    transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+.btn-primary:hover, .btn-continue:hover {
+    transform: scale(1.05) rotate(-1deg) !important;
+    background: var(--primary) !important;
+    color: white !important;
+}
+
+/* 5. FIX LAYOUT CLIPPING */
+.intro-scene-section {
+    min-height: 100vh !important;
+    height: auto !important;
+    justify-content: flex-start !important; /* Allow scrolling */
+    padding-top: 10vh !important;
+    padding-bottom: 10vh !important;
+}
+
+.screen {
+    height: auto !important;
+    min-height: 100vh !important;
+    align-items: flex-start !important;
+    overflow-y: auto !important; /* Ensure screen itself scrolls */
+}
