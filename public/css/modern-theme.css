@@ -1,0 +1,143 @@
+/* ==========================================
+   LA EVOLUCIÓN DEL TAGGING - Modern Data Sketch
+   Aesthetic: "The Analyst's Notebook" (Clean + Handwritten)
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+    /* Colors - The Analyst's Notebook */
+    --bg-paper: #FDFBF7; /* Creamy paper */
+    --ink-dark: #2D3436; /* Softer than black */
+    --ink-light: #636E72;
+    
+    /* Accents - Highlighters */
+    --highlight-blue: #74b9ff;
+    --highlight-yellow: #ffeaa7;
+    --highlight-green: #55efc4;
+    --highlight-red: #ff7675;
+    
+    /* Functional */
+    --primary: #fadd63;  /* Evolution yellow, refined */
+    --primary-hover: #f9d342;
+    --secondary: #81ecec;
+    --text: var(--ink-dark);
+    --text-light: var(--ink-light);
+    
+    /* Typography */
+    --font-hand: 'Kalam', cursive;
+    --font-data: 'Outfit', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+    --font-title: 'Kalam', cursive;
+
+    /* Shapes */
+    --border-sketchy: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    --border-sketchy-sm: 2px solid var(--ink-dark);
+}
+
+/* Base Overrides */
+body {
+    background-color: var(--bg-paper);
+    color: var(--text);
+    font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-title);
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: 3rem;
+    position: relative;
+    display: inline-block;
+}
+
+/* Handwritten Highlights for Titles */
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 12px;
+    background: var(--highlight-yellow);
+    z-index: -1;
+    transform: rotate(-1deg);
+    opacity: 0.6;
+    border-radius: 4px;
+}
+
+/* Component: Sketchy Containers */
+.narrator-box, .minigame-container, .checklist-item-container {
+    background: white;
+    border: 2px solid var(--ink-dark);
+    border-radius: var(--border-sketchy);
+    box-shadow: 4px 4px 0 var(--ink-dark); /* Hard shadow */
+    transition: transform 0.2s ease;
+}
+
+.narrator-box:hover, .minigame-container:hover {
+    transform: scale(1.01) rotate(0.5deg);
+}
+
+/* Component: Buttons */
+.btn-primary, .btn-continue {
+    font-family: var(--font-hand);
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    background: white;
+    box-shadow: 3px 3px 0 var(--ink-dark);
+    border: 2px solid var(--ink-dark);
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover, .btn-continue:hover {
+    background: var(--primary);
+    transform: translateY(-2px) rotate(-1deg);
+    box-shadow: 5px 5px 0 var(--ink-dark);
+}
+
+.intro-pill {
+    font-family: var(--font-data);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    background: var(--ink-dark);
+    color: white;
+    border-radius: 4px;
+    padding: 4px 12px;
+}
+
+/* Component: Code Blocks */
+pre, code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    background: #2d3436 !important;
+    border-radius: 8px;
+    color: #dfe6e9 !important;
+}
+
+/* Narrative Icons */
+.narrator-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.2));
+}
+
+/* Glass HUD Override */
+.teacher-bar {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--ink-dark);
+    color: var(--ink-dark);
+}
+
+.teacher-btn {
+    border-color: var(--ink-dark);
+    color: var(--ink-dark);
+}
+
+.teacher-btn:hover {
+    background: var(--highlight-yellow);
+}
